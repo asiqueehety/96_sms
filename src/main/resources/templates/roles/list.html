@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roles - Student Management System</title>
+</head>
+<body>
+    <h1>Manage Roles</h1>
+    <p><a th:href="@{/dashboard}">Back to Dashboard</a></p>
+
+    <h2>All Roles</h2>
+    <p><a th:href="@{/roles/new}">Add New Role</a></p>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="role : ${roles}">
+                <td th:text="${role.id}"></td>
+                <td th:text="${role.name}"></td>
+                <td>
+                    <a th:href="@{/roles/edit/{id}(id=${role.id})}">Edit</a> |
+                    <a th:href="@{/roles/delete/{id}(id=${role.id})}"
+                       onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

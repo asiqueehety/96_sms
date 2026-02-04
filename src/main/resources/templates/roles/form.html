@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Role Form - Student Management System</title>
+</head>
+<body>
+    <h1 th:text="${role.id != null ? 'Edit Role' : 'Create New Role'}"></h1>
+    <p><a th:href="@{/roles}">Back to Roles</a></p>
+
+    <form th:action="${role.id != null ? '/roles/update' : '/roles/create'}"
+          th:object="${role}" method="post">
+
+        <input type="hidden" th:field="*{id}" th:if="${role.id != null}">
+
+        <p>
+            <label>Role Name:</label><br>
+            <input type="text" th:field="*{name}" required>
+        </p>
+
+        <p>
+            <button type="submit">Save</button>
+        </p>
+    </form>
+</body>
+</html>

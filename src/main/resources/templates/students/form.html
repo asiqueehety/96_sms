@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form - Student Management System</title>
+</head>
+<body>
+    <h1 th:text="${student.id != null ? 'Edit Student' : 'Create New Student'}"></h1>
+    <p><a th:href="@{/students}">Back to Students</a></p>
+
+    <form th:action="${student.id != null ? '/students/update' : '/students/create'}"
+          th:object="${student}" method="post">
+
+        <input type="hidden" th:field="*{id}" th:if="${student.id != null}">
+
+        <p>
+            <label>Name:</label><br>
+            <input type="text" th:field="*{name}" required>
+        </p>
+
+        <!-- Email and Password only for teachers or new students -->
+        <div th:if="${isTeacher == null || isTeacher}">
+            <p>
+                <label>Email:</label><br>
+                <input type="email" th:field="*{email}" required th:readonly="${student.id != null && !isTeacher}">
+            </p>
+
+            <p th:if="${student.id == null}">
+                <label>Password:</label><br>
+                <input type="password" th:field="*{password}" required>
+            </p>
+
+            <p>
+                <label>Roll Number:</label><br>
+                <input type="text" th:field="*{roll}" required>
+            </p>
+        </div>
+
+        <p>
+            <label>Phone:</label><br>
+            <input type="text" th:field="*{phone}">
+        </p>
+
+        <!-- Academic fields only for teachers -->
+        <div th:if="${isTeacher == null || isTeacher}">
+            <p>
+                <label>Marks:</label><br>
+                <input type="number" step="0.01" th:field="*{marks}">
+            </p>
+
+            <p>
+                <label>GPA:</label><br>
+                <input type="number" step="0.01" min="0" max="4" th:field="*{gpa}">
+            </p>
+
+            <p>
+                <label>CGPA:</label><br>
+                <input type="number" step="0.01" min="0" max="4" th:field="*{cgpa}">
+            </p>
+
+            <p>
+                <label>Department:</label><br>
+                <select name="departmentId" required>
+                    <option value="">-- Select Department --</option>
+                    <option th:each="dept : ${departments}"
+                            th:value="${dept.id}"
+                            th:text="${dept.name}"
+                            th:selected="${student.department != null && student.department.id == dept.id}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                <label>Role:</label><br>
+                <select name="roleId" required>
+                    <option value="">-- Select Role --</option>
+                    <option th:each="role : ${roles}"
+                            th:value="${role.id}"
+                            th:text="${role.name}"
+                            th:selected="${student.role != null && student.role.id == role.id}">
+                    </option>
+                </select>
+            </p>
+        </div>
+
+        <p>
+            <button type="submit">Save</button>
+        </p>
+    </form>
+</body>
+</html>

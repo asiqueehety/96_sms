@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile - Student Management System</title>
+</head>
+<body>
+    <h1>Edit My Profile</h1>
+    <p><a th:href="@{/profile}">Back to Profile</a></p>
+
+    <p><strong>Note:</strong> You can only edit your name and phone number.</p>
+
+    <form th:action="@{/profile/update}" method="post">
+
+        <p>
+            <label>Name:</label><br>
+            <input type="text" name="name" th:value="${student.name}" required>
+        </p>
+
+        <p>
+            <label>Phone:</label><br>
+            <input type="text" name="phone" th:value="${student.phone}">
+        </p>
+
+        <hr>
+        <p><strong>Read-only information:</strong></p>
+
+        <p>
+            <label>Email:</label><br>
+            <input type="text" th:value="${student.email}" disabled>
+        </p>
+
+        <p>
+            <label>Roll Number:</label><br>
+            <input type="text" th:value="${student.roll}" disabled>
+        </p>
+
+        <p>
+            <label>Marks:</label><br>
+            <input type="text" th:value="${student.marks}" disabled>
+        </p>
+
+        <p>
+            <label>GPA:</label><br>
+            <input type="text" th:value="${student.gpa}" disabled>
+        </p>
+
+        <p>
+            <label>CGPA:</label><br>
+            <input type="text" th:value="${student.cgpa}" disabled>
+        </p>
+
+        <p>
+            <button type="submit">Update Profile</button>
+        </p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers - Student Management System</title>
+</head>
+<body>
+    <h1>Manage Teachers</h1>
+    <p><a th:href="@{/dashboard}">Back to Dashboard</a></p>
+
+    <h2>All Teachers</h2>
+    <p><a th:href="@{/teachers/new}">Add New Teacher</a></p>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="teacher : ${teachers}">
+                <td th:text="${teacher.id}"></td>
+                <td th:text="${teacher.name}"></td>
+                <td th:text="${teacher.email}"></td>
+                <td th:text="${teacher.phone}"></td>
+                <td th:text="${teacher.department?.name}"></td>
+                <td th:text="${teacher.role?.name}"></td>
+                <td>
+                    <a th:href="@{/teachers/edit/{id}(id=${teacher.id})}">Edit</a> |
+                    <a th:href="@{/teachers/delete/{id}(id=${teacher.id})}"
+                       onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

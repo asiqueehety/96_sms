@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile - Student Management System</title>
+</head>
+<body>
+    <h1>My Profile</h1>
+    <p><a th:href="@{/dashboard}">Back to Dashboard</a></p>
+
+    <h2>Profile Information</h2>
+
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <td th:text="${student.name}"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td th:text="${student.email}"></td>
+        </tr>
+        <tr>
+            <th>Roll Number</th>
+            <td th:text="${student.roll}"></td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td th:text="${student.phone}"></td>
+        </tr>
+        <tr>
+            <th>Department</th>
+            <td th:text="${student.department?.name}"></td>
+        </tr>
+        <tr>
+            <th>Marks</th>
+            <td th:text="${student.marks}"></td>
+        </tr>
+        <tr>
+            <th>GPA</th>
+            <td th:text="${student.gpa}"></td>
+        </tr>
+        <tr>
+            <th>CGPA</th>
+            <td th:text="${student.cgpa}"></td>
+        </tr>
+    </table>
+
+    <p><a th:href="@{/profile/edit}">Edit My Profile</a> (Only name and phone can be edited)</p>
+</body>
+</html>

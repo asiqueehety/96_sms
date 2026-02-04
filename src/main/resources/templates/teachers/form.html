@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Form - Student Management System</title>
+</head>
+<body>
+    <h1 th:text="${teacher.id != null ? 'Edit Teacher' : 'Create New Teacher'}"></h1>
+    <p><a th:href="@{/teachers}">Back to Teachers</a></p>
+
+    <form th:action="${teacher.id != null ? '/teachers/update' : '/teachers/create'}"
+          th:object="${teacher}" method="post">
+
+        <input type="hidden" th:field="*{id}" th:if="${teacher.id != null}">
+
+        <p>
+            <label>Name:</label><br>
+            <input type="text" th:field="*{name}" required>
+        </p>
+
+        <p>
+            <label>Email:</label><br>
+            <input type="email" th:field="*{email}" required>
+        </p>
+
+        <p th:if="${teacher.id == null}">
+            <label>Password:</label><br>
+            <input type="password" th:field="*{password}" required>
+        </p>
+
+        <p>
+            <label>Phone:</label><br>
+            <input type="text" th:field="*{phone}">
+        </p>
+
+        <p>
+            <label>Department:</label><br>
+            <select name="departmentId" required>
+                <option value="">-- Select Department --</option>
+                <option th:each="dept : ${departments}"
+                        th:value="${dept.id}"
+                        th:text="${dept.name}"
+                        th:selected="${teacher.department != null && teacher.department.id == dept.id}">
+                </option>
+            </select>
+        </p>
+
+        <p>
+            <label>Role:</label><br>
+            <select name="roleId" required>
+                <option value="">-- Select Role --</option>
+                <option th:each="role : ${roles}"
+                        th:value="${role.id}"
+                        th:text="${role.name}"
+                        th:selected="${teacher.role != null && teacher.role.id == role.id}">
+                </option>
+            </select>
+        </p>
+
+        <p>
+            <button type="submit">Save</button>
+        </p>
+    </form>
+</body>
+</html>

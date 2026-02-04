@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Student Management System</title>
+</head>
+<body>
+    <h1>Student Management System - Dashboard</h1>
+    <p>Welcome, <span th:text="${username}"></span>!</p>
+
+    <h2>Navigation</h2>
+    <ul>
+        <li><a th:href="@{/students}">View Students</a></li>
+
+        <li th:if="${isTeacher}"><a th:href="@{/students/new}">Create New Student</a></li>
+        <li th:if="${isTeacher}"><a th:href="@{/teachers}">Manage Teachers</a></li>
+        <li th:if="${isTeacher}"><a th:href="@{/departments}">Manage Departments</a></li>
+        <li th:if="${isTeacher}"><a th:href="@{/roles}">Manage Roles</a></li>
+
+        <li th:unless="${isTeacher}"><a th:href="@{/profile}">My Profile</a></li>
+    </ul>
+
+    <hr>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

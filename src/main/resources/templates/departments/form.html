@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Form - Student Management System</title>
+</head>
+<body>
+    <h1 th:text="${department.id != null ? 'Edit Department' : 'Create New Department'}"></h1>
+    <p><a th:href="@{/departments}">Back to Departments</a></p>
+
+    <form th:action="${department.id != null ? '/departments/update' : '/departments/create'}"
+          th:object="${department}" method="post">
+
+        <input type="hidden" th:field="*{id}" th:if="${department.id != null}">
+
+        <p>
+            <label>Department Name:</label><br>
+            <input type="text" th:field="*{name}" required>
+        </p>
+
+        <p>
+            <label>Description:</label><br>
+            <textarea th:field="*{description}" rows="3" cols="40"></textarea>
+        </p>
+
+        <p>
+            <button type="submit">Save</button>
+        </p>
+    </form>
+</body>
+</html>
