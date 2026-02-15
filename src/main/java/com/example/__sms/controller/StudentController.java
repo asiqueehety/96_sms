@@ -35,7 +35,6 @@ public class StudentController {
         return "students/list";
     }
 
-    // Only teachers can create students
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("student", new Student());
@@ -54,7 +53,6 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    // Teachers can edit everything, students can only edit name and phone
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model, Authentication authentication) {
         Optional<Student> student = studentService.findById(id);
@@ -62,7 +60,6 @@ public class StudentController {
             boolean isTeacher = authentication.getAuthorities()
                 .contains(new SimpleGrantedAuthority("ROLE_TEACHER"));
 
-            // If student, check if editing own profile
             if (!isTeacher) {
                 String currentUserEmail = authentication.getName();
                 if (!student.get().getEmail().equals(currentUserEmail)) {
@@ -91,7 +88,6 @@ public class StudentController {
         if (existingStudent.isPresent()) {
             Student s = existingStudent.get();
 
-            // If student, only update name and phone
             if (!isTeacher) {
                 String currentUserEmail = authentication.getName();
                 if (!s.getEmail().equals(currentUserEmail)) {
@@ -100,7 +96,6 @@ public class StudentController {
                 s.setName(student.getName());
                 s.setPhone(student.getPhone());
             } else {
-                // Teacher can update everything
                 s.setName(student.getName());
                 s.setEmail(student.getEmail());
                 s.setPhone(student.getPhone());

@@ -28,7 +28,6 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Create roles if they don't exist
         Role teacherRole = roleRepository.findByName("TEACHER").orElseGet(() -> {
             Role role = new Role("TEACHER");
             return roleRepository.save(role);
@@ -39,16 +38,14 @@ public class DataInitializer implements CommandLineRunner {
             return roleRepository.save(role);
         });
 
-        // Create a default department if none exists
-        Department defaultDept = departmentRepository.findByName("Computer Science and Engineering").orElseGet(() -> {
-            Department dept = new Department("Computer Science and Engineering", "Department of Computer Science and Engineering");
+        Department defaultDept = departmentRepository.findByName("CSE").orElseGet(() -> {
+            Department dept = new Department("CSE", "Department of Computer Science and Engineering");
             return departmentRepository.save(dept);
         });
 
-        // Create a default teacher if none exists
         if (teacherRepository.findByEmail("adminbhai@sms.com").isEmpty()) {
             Teacher admin = new Teacher();
-            admin.setName("Shikkhok");
+            admin.setName("shikkhok");
             admin.setEmail("adminbhai@sms.com");
             admin.setPassword(passwordEncoder.encode("adminbhai"));
             admin.setPhone("01896121096");

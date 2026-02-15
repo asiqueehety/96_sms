@@ -36,23 +36,19 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // Public pages
+
                 .requestMatchers("/", "/login", "/css/**", "/js/**").permitAll()
 
-                // Teacher-only pages (CRUD for students, teachers, departments, roles)
                 .requestMatchers("/students/new", "/students/create", "/students/delete/**").hasRole("TEACHER")
                 .requestMatchers("/students/edit/**", "/students/update").hasAnyRole("TEACHER", "STUDENT")
                 .requestMatchers("/teachers/**").hasRole("TEACHER")
                 .requestMatchers("/departments/**").hasRole("TEACHER")
                 .requestMatchers("/roles/**").hasRole("TEACHER")
 
-                // Both can view students list
                 .requestMatchers("/students", "/students/").hasAnyRole("TEACHER", "STUDENT")
 
-                // Student profile edit (limited)
                 .requestMatchers("/profile/**").hasRole("STUDENT")
 
-                // Dashboard access
                 .requestMatchers("/dashboard").authenticated()
 
                 .anyRequest().authenticated()

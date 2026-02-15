@@ -18,7 +18,6 @@
             <input type="text" th:field="*{name}" required>
         </p>
 
-        <!-- Email and Password only for teachers or new students -->
         <div th:if="${isTeacher == null || isTeacher}">
             <p>
                 <label>Email:</label><br>
