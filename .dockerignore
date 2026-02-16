@@ -1,0 +1,34 @@
+# Build artifacts
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Maven wrapper (we use the one in the container)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files (not needed in production image)
+src/test/
+
+# Docker files (prevent recursive copying)
+Dockerfile
+docker-compose.yml
+.dockerignore
