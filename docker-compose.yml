@@ -1,0 +1,50 @@
+version: '3.8'
+  postgres_data:
+volumes:
+
+    driver: bridge
+  sms-network:
+networks:
+
+    restart: unless-stopped
+      retries: 5
+      timeout: 5s
+      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sms_db"]
+    healthcheck:
+      - sms-network
+    networks:
+      - postgres_data:/var/lib/postgresql/data
+    volumes:
+      - "5432:5432"
+    ports:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=sms_db
+    environment:
+    container_name: sms-db
+    image: postgres:16-alpine
+  db:
+  # PostgreSQL Database
+
+    restart: unless-stopped
+      - sms-network
+    networks:
+        condition: service_healthy
+      db:
+    depends_on:
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sms_db
+    environment:
+      - "8080:8080"
+    ports:
+    container_name: sms-app
+      dockerfile: Dockerfile
+      context: .
+    build:
+  app:
+  # Spring Boot Application
+services:
+
